@@ -7,7 +7,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8002/api/network-devices/device1%2et0n%2eeu/
+GET http://localhost:8002/api/network-devices/device2%2et0n%2eeu/
 Accept: application/json
 
 ###
@@ -16,8 +16,8 @@ POST http://localhost:8002/api/network-devices
 Content-Type: application/json
 
 {
-  "fqdn": "device1.t0n.eu",
-  "model": "ios-XE",
+  "fqdn": "devicXXXe1.t0n.eu",
+  "model": "ios-xe",
   "version": "0.1"
 }
 

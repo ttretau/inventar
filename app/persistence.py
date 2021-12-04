@@ -1,6 +1,11 @@
 import pickle
+from typing import List
+
 from pydantic import BaseModel
 from fastapi import HTTPException, status
+from pydantic.tools import parse_obj_as
+
+from app.entities.network_device import NetworkDevice
 
 
 class Persistence():
@@ -33,7 +38,7 @@ class Persistence():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
     def find_all(self):
-        return []
+        return parse_obj_as(List[NetworkDevice], list(self.data.values()))
 
     def persist(self, obj: BaseModel):
         self.data[obj.fqdn] = obj.dict()
