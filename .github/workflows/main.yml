@@ -62,6 +62,6 @@ jobs:
             -e ENVIRONMENT=dev \
             -p 5003:8000 \
             ${{ env.IMAGE }}:latest \
-            --entrypoint uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+            --entrypoint="uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000"
       - name: Pytest
         run: docker exec inventar-app python -m pytest .
