@@ -3,7 +3,7 @@ name: build & test
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/inventory-app
