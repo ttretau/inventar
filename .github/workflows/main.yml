@@ -64,4 +64,4 @@ jobs:
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Pytest
-        run: docker exec fastapi-tdd python -m pytest .
+        run: docker exec inventar-app python -m pytest .
