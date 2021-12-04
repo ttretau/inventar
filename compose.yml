@@ -9,6 +9,7 @@ services:
     container_name: inventar-app
     volumes:
       - ./:/usr/src/app
+      - /tmp:/tmp
     ports:
       - 8002:8000
     environment:

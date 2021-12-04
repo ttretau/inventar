@@ -4,31 +4,31 @@ from fastapi import HTTPException, status
 
 
 class Persistence():
+    data = {}
 
     def DATA_FILE(self):
         return '/tmp/network_devices.pickle'
 
     def __init__(self):
-        global data
+        print("INIT")
         try:
-            print('open data')
             with open(self.DATA_FILE(), 'rb') as handle:
-                data = pickle.load(handle)
-            print("finished data load")
+                self.data = pickle.load(handle)
+            print("Finished data load")
         except Exception as e:
             print('Failed loading data!')
-            data = {}
 
     def __call__(self):
         return self
 
     def shutdown(self):
+        print("SHUTDOWN")
         with open(self.DATA_FILE(), 'wb') as handle:
-            pickle.dump(data, handle)
+            pickle.dump(self.data, handle)
 
     def find_by_fqdn(self, fqdn: str):
         try:
-            return data[fqdn]
+            return self.data[fqdn]
         except KeyError:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
@@ -36,10 +36,8 @@ class Persistence():
         return []
 
     def persist(self, obj: BaseModel):
-        data[obj.fqdn] = obj
+        self.data[obj.fqdn] = obj.dict()
+        return obj
 
     def update(self, fqdn, network_device: BaseModel):
-        data[fqdn] = network_device
-
-
-persistence = Persistence()
+        self.data[fqdn] = network_device
