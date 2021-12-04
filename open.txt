@@ -1,0 +1,5 @@
+- DI Singleton impl (@Singleton? ;-) revisit!!
+- Validating.. ex. unique fqdn, inputs..
+- List, get all method implementation
+- Versioning with Fast API preference to build header & DI way
+- Refactor App structure & routing
