@@ -28,7 +28,7 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./dockerfiles/app-prod.dockerfile "."
+            --file ./Dockerfile "."
       - name: Push image
         run: |
           docker push ${{ env.IMAGE }}:latest
@@ -52,16 +52,15 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./dockerfiles/app-prod.dockerfile \
+            --file ./Dockerfile \
             "./"
       - name: Run container
         run: |
           docker run \
             -d \
-            --name fastapi-tdd \
+            --name inventar-app \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
-            -e DATABASE_TEST_URL=sqlite://sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Pytest
