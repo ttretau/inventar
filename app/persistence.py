@@ -46,3 +46,4 @@ class Persistence():
 
     def update(self, fqdn, network_device: BaseModel):
         self.data[fqdn] = network_device
+        return network_device

@@ -12,14 +12,8 @@ def get_persistence():
 
 
 @app.on_event("shutdown")
-async def on_shutdown(persistence: Persistence = Depends(get_persistence())):
-    persistence.shutdown()
-
-
-@app.get("/hello")
-def hello():
-    return {"hello": "world!"}
-
+async def on_shutdown():
+    get_persistence().shutdown()
 
 @app.post("/api/network-devices")
 def create_network_device(network_device: NetworkDevice,
@@ -30,8 +24,7 @@ def create_network_device(network_device: NetworkDevice,
 @app.put("/api/network-devices/{fqdn}/")
 def update_network_device(fqdn: str, network_device: NetworkDevice,
                           persistence: Persistence = Depends(get_persistence())) -> NetworkDevice:
-    persistence.update(fqdn, network_device)
-    return network_device
+    return persistence.update(fqdn, network_device)
 
 
 @app.get("/api/network-devices/{fqdn}/")

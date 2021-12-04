@@ -16,7 +16,7 @@ POST http://localhost:8002/api/network-devices
 Content-Type: application/json
 
 {
-  "fqdn": "devicXXXe1.t0n.eu",
+  "fqdn": "devicXXXXXXe1.rulle.eu",
   "model": "ios-xe",
   "version": "0.1"
 }
