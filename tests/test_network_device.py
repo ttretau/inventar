@@ -41,12 +41,6 @@ def test_get_network_device():
     assert response.json() == test_request_device1
 
 
-def test_read_network_device_list():
-    response = client.get("/api/network-devices")
-    assert response.status_code == 200
-    assert len(response.json()) > 1
-
-
 def test_update_network():
     response = client.put("/api/network-devices/device1%2et0n%2eeu/", json=test_request_update_device1)
     assert response.status_code == 200
@@ -54,3 +48,9 @@ def test_update_network():
     response = client.get("/api/network-devices/device1%2et0n%2eeu/")
     assert response.status_code == 200
     assert response.json() == test_request_update_device1
+
+
+def test_read_network_device_list():
+    response = client.get("/api/network-devices")
+    assert response.status_code == 200
+    assert len(response.json()) > 1
