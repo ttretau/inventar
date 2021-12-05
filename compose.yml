@@ -14,3 +14,4 @@ services:
       - 8002:8000
     environment:
       - ENVIRONMENT=dev
+      - API_TOKEN=SECRET_TOKEN

@@ -1,4 +1,5 @@
 - DI Singleton impl (@Singleton? ;-) revisit!!
-- Validating.. ex. unique fqdn, inputs..
+- Validating.. ex. inputs..
 - Versioning with Fast API preference to build header & DI way
 - Refactor App structure & routing
+- Tests: state, BDD, mock

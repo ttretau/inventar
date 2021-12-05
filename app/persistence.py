@@ -1,4 +1,5 @@
 import pickle
+import os
 from typing import List
 
 from pydantic import BaseModel
@@ -12,7 +13,7 @@ class Persistence():
     data = {}
 
     def DATA_FILE(self):
-        return '/tmp/network_devices.pickle'
+        return os.environ.get('STORAGE_DIR', '/tmp') + '/network_devices.pickle'
 
     def __init__(self):
         print("INIT")
@@ -41,9 +42,18 @@ class Persistence():
         return parse_obj_as(List[NetworkDevice], list(self.data.values()))
 
     def persist(self, obj: BaseModel):
+        if obj.fqdn in self.data.keys():
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Entity exists!")
         self.data[obj.fqdn] = obj.dict()
         return obj
 
     def update(self, fqdn, network_device: BaseModel):
         self.data[fqdn] = network_device
         return network_device
+
+    def delete(self, fqdn):
+        print(f"{fqdn} {self.data.keys()}")
+        try:
+            return self.data.pop(fqdn)
+        except KeyError:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
