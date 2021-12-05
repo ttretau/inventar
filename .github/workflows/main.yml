@@ -63,7 +63,7 @@ jobs:
             -e ENVIRONMENT=dev \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
-#      - name: Install requirements
-#        run: docker exec inventar-app pip install pytest==6.0.1
+      - name: Install requirements
+        run: docker exec --user app inventar-app pip install pytest==6.0.1
       - name: Pytest
-        run: docker exec inventar-app python -m pytest .
+        run: docker exec --user app inventar-app python -m pytest .
