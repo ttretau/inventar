@@ -64,6 +64,6 @@ jobs:
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Install requirements
-        run: docker exec --user app inventar-app pip install pytest==6.0.1
+        run: docker exec --user app inventar-app pip --no-cache-dir install pytest==6.2.5 requests==2.26.0
       - name: Pytest
         run: docker exec --user app inventar-app python -m pytest .
