@@ -29,6 +29,11 @@ def test_create_network_device():
     assert response.json() == test_request_device1
 
 
+def test_create_network_device_unique_failed():
+    response = client.post("/api/network-devices", json=test_request_device1, headers={"Api-Token": "SECRET_TOKEN"})
+    assert response.status_code == 422
+
+
 def test_create_another_network_device():
     response = client.post("/api/network-devices", json=test_request_device2, headers={"Api-Token": "SECRET_TOKEN"})
     assert response.status_code == 200
