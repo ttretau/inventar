@@ -27,8 +27,8 @@ jobs:
         run: |
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
-            --tag ${{ env.IMAGE }}:${{ github.event.release.tag_name }} \
+            --tag ${{ env.IMAGE }}:${GITHUB_REF/refs\/tags\//} \
             --file ./Dockerfile.prod "."
       - name: Push image
         run: |
-          docker push ${{ env.IMAGE }}:${{ github.event.release.tag_name }}
+          docker push ${{ env.IMAGE }}:${GITHUB_REF/refs\/tags\//}
