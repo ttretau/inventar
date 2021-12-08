@@ -3,6 +3,7 @@ from typing import List
 from app.entities.network_device import NetworkDevice
 from app.persistence import Persistence
 from typing import Optional
+from starlette_exporter import PrometheusMiddleware, handle_metrics
 import os
 
 from app.persistence_mongo import PersistenceMongo
@@ -10,6 +11,8 @@ from app.persistence_mongo import PersistenceMongo
 app = FastAPI()
 file_persistence = Persistence()
 mongo_persistence = PersistenceMongo(os.environ.get('MONGO_URL'))
+app.add_middleware(PrometheusMiddleware)
+app.add_route("/metrics", handle_metrics)
 
 
 def get_persistence():
