@@ -5,11 +5,16 @@ from app.persistence import Persistence
 from typing import Optional
 import os
 
+from app.persistence_mongo import PersistenceMongo
+
 app = FastAPI()
 file_persistence = Persistence()
+mongo_persistence = PersistenceMongo(os.environ.get('MONGO_URL'))
 
 
 def get_persistence():
+    if os.environ.get('MONGO_URL') is not None:
+        return mongo_persistence
     return file_persistence
 
 
@@ -28,29 +33,34 @@ async def on_shutdown():
 
 
 @app.post("/api/network-devices", dependencies=[Depends(api_token)])
-async def create_network_device(network_device: NetworkDevice, request: Request,
+async def create_network_device(network_device: NetworkDevice,
                                 persistence: Persistence = Depends(get_persistence())) -> NetworkDevice:
-    return persistence.persist(network_device)
+    await persistence.persist(network_device)
+    return network_device
 
 
 @app.put("/api/network-devices/{fqdn}/", dependencies=[Depends(api_token)])
 async def update_network_device(fqdn: str, network_device: NetworkDevice,
                                 persistence: Persistence = Depends(get_persistence())) -> NetworkDevice:
-    return persistence.update(fqdn, network_device)
+    result = await persistence.update(fqdn, network_device)
+    return result
 
 
 @app.get("/api/network-devices/{fqdn}/", dependencies=[Depends(api_token)])
 async def get_network_device(fqdn: str,
                              persistence: Persistence = Depends(get_persistence())) -> NetworkDevice:
-    return persistence.find_by_fqdn(fqdn)
+    result = await persistence.find_by_fqdn(fqdn)
+    return result
 
 
 @app.get("/api/network-devices", dependencies=[Depends(api_token)])
 async def get_network_devices(persistence: Persistence = Depends(get_persistence())) -> List:
-    return persistence.find_all()
+    result = await persistence.find_all()
+    return result
 
 
 @app.delete("/api/network-devices/{fqdn}/", dependencies=[Depends(api_token)])
 async def update_network_device(fqdn: str,
                                 persistence: Persistence = Depends(get_persistence())) -> NetworkDevice:
-    return persistence.delete(fqdn)
+    result = await persistence.delete(fqdn)
+    return result

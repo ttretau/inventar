@@ -32,27 +32,26 @@ class Persistence():
         with open(self.DATA_FILE(), 'wb') as handle:
             pickle.dump(self.data, handle)
 
-    def find_by_fqdn(self, fqdn: str):
+    async def find_by_fqdn(self, fqdn: str):
         try:
             return self.data[fqdn]
         except KeyError:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
-    def find_all(self):
+    async def find_all(self):
         return parse_obj_as(List[NetworkDevice], list(self.data.values()))
 
-    def persist(self, obj: BaseModel):
+    async def persist(self, obj: BaseModel):
         if obj.fqdn in self.data.keys():
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Entity exists!")
         self.data[obj.fqdn] = obj.dict()
         return obj
 
-    def update(self, fqdn, network_device: BaseModel):
+    async def update(self, fqdn, network_device: BaseModel):
         self.data[fqdn] = network_device
         return network_device
 
-    def delete(self, fqdn):
-        print(f"{fqdn} {self.data.keys()}")
+    async def delete(self, fqdn):
         try:
             return self.data.pop(fqdn)
         except KeyError:

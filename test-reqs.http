@@ -4,11 +4,13 @@ Accept: application/json
 ###
 GET http://localhost:8002/api/network-devices
 Accept: application/json
+api-token: SECRET_TOKEN
 
 ###
 
 GET http://localhost:8002/api/network-devices/device1%2et0n%2eeu/
 Accept: application/json
+api-token: SECRET_TOKEN
 
 ###
 
@@ -17,7 +19,7 @@ Content-Type: application/json
 api-token: SECRET_TOKEN
 
 {
-  "fqdn": "devicXXXXXXe1.rulle.eu",
+  "fqdn": "device1.t0n.eu",
   "model": "ios-xe",
   "version": "0.1"
 }
@@ -26,6 +28,7 @@ api-token: SECRET_TOKEN
 
 POST http://localhost:8002/api/network-devices
 Content-Type: application/json
+api-token: SECRET_TOKEN
 
 {
   "fqdn": "device2.t0n.eu",
@@ -36,8 +39,10 @@ Content-Type: application/json
 
 DELETE http://localhost:8002/api/network-devices/device2%2et0n%2eeu/
 Accept: application/json
+api-token: SECRET_TOKEN
 
 ###
 
 DELETE http://localhost:8002/api/network-devices/device1%2et0n%2eeu/
 Accept: application/json
+api-token: SECRET_TOKEN
