@@ -67,3 +67,8 @@ async def update_network_device(fqdn: str,
                                 persistence: Persistence = Depends(get_persistence())) -> NetworkDevice:
     result = await persistence.delete(fqdn)
     return result
+
+
+@app.get("/health")
+def hello():
+    return {"hello": "health!"}
