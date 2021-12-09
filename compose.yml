@@ -15,7 +15,6 @@ services:
     environment:
       - ENVIRONMENT=dev
       - API_TOKEN=SECRET_TOKEN
-      - MONGO_URL="mongodb://inventar:password123@inventar-mongo:27017/inventar"
   mongo:
     image: 'bitnami/mongodb:latest'
     container_name: inventar-mongo
